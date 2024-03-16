@@ -10,7 +10,7 @@ services:
       - ${FLASK_PORT}:${FLASK_PORT}
     volumes:
       - ./flask-server:/app
-    stdin_open: false
+    stdin_open: true
     tty: true
   react-app:
     build:

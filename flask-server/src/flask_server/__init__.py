@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_server.utilities.json import CustomJSONProvider
+from flask_server.services.user_service import user_service
 
 
 def create_app(test_config=None):
@@ -32,5 +33,8 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
+
+    # Register user service
+    app.register_blueprint(user_service)
 
     return app
