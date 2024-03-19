@@ -10,6 +10,7 @@ import firebaseConfig from "./config";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+import AppBarComponent from "./components/AppBar";
 // import { getAnalytics } from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,7 +22,8 @@ function App() {
   const auth = getAuth(app);
 
   return (
-    <Container maxWidth="sm" className="App">
+    <Container maxWidth="xl" className="App">
+      <AppBarComponent />
       <Paper>
         <img src={logo} className="App-logo" alt="logo" />
         <Typography variant="h4" component="h1" gutterBottom>
