@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import "./App.css";
 
 // Your web app's Firebase configuration
@@ -20,23 +21,20 @@ function App() {
   const auth = getAuth(app);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <Container maxWidth="sm" className="App">
+      <Paper>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>JOE MAMA</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Create React App + Material-UI
+        </Typography>
+        <Button variant="contained" color="primary">
+          Primary Button
+        </Button>
+        <Button variant="contained" color="secondary">
+          Secondary Button
+        </Button>
+      </Paper>
+    </Container>
   );
 }
 
