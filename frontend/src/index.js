@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import ErrorPage from "./routes/error-page";
+import Authentication from "./routes/authentication";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
     ),
     errorElement: <ErrorPage />,
     children: [{}],
+  },
+  {
+    path: "/login",
+    element: <Authentication />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

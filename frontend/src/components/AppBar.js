@@ -7,6 +7,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { createSvgIcon } from "@mui/material/utils";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import logo from "../logo.png";
@@ -39,9 +40,11 @@ const AppBarComponent = () => {
         <Box sx={{ flex: 1 }}></Box>
         <Typography sx={{ pr: 5, fontWeight: 600 }}>Find Classes</Typography>
         <Typography sx={{ pr: 5, fontWeight: 600 }}>Your Classes</Typography>
-        <IconButton size="large">
-          <AccountCircleTwoToneIcon size="large" />
-        </IconButton>
+        <Link to={"/login"}>
+          <IconButton size="large">
+            <AccountCircleTwoToneIcon size="large" />
+          </IconButton>
+        </Link>
       </Toolbar>
     </AppBar>
   );
