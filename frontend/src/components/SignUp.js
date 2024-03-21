@@ -3,7 +3,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -13,7 +12,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Copyright(props) {
   return (
@@ -45,7 +43,6 @@ export default function SignUp({ showSignInSetter }) {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -71,6 +68,7 @@ export default function SignUp({ showSignInSetter }) {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                color="secondary"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -81,6 +79,7 @@ export default function SignUp({ showSignInSetter }) {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                color="secondary"
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +90,7 @@ export default function SignUp({ showSignInSetter }) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                color="secondary"
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,11 +102,14 @@ export default function SignUp({ showSignInSetter }) {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                color="secondary"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={
+                  <Checkbox value="allowExtraEmails" color="secondary" />
+                }
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
@@ -115,7 +118,11 @@ export default function SignUp({ showSignInSetter }) {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            color="secondary"
+            sx={{
+              mt: 3,
+              mb: 2,
+            }}
           >
             Sign Up
           </Button>
@@ -125,6 +132,7 @@ export default function SignUp({ showSignInSetter }) {
                 onClick={() => showSignInSetter(true)}
                 href="#"
                 variant="body2"
+                color="secondary.main"
               >
                 Already have an account? Sign in
               </Link>

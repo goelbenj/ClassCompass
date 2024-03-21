@@ -13,12 +13,7 @@ import theme from "./theme";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    ),
+    element: <App />,
     errorElement: <ErrorPage />,
     children: [{}],
   },
@@ -32,7 +27,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
 
