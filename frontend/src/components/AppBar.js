@@ -11,8 +11,11 @@ import { Link } from "react-router-dom";
 import { createSvgIcon } from "@mui/material/utils";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import logo from "../logo.png";
+import { useNavigate } from "react-router-dom";
 
 const AppBarComponent = () => {
+  const navigate = useNavigate();
+
   const ClassCompassIcon = createSvgIcon(
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.9 595.3">
       <g fill="#61DAFB">
@@ -22,6 +25,10 @@ const AppBarComponent = () => {
       </g>
     </svg>
   );
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
 
   return (
     <AppBar
@@ -33,7 +40,7 @@ const AppBarComponent = () => {
       }}
     >
       <Toolbar>
-        <IconButton>
+        <IconButton onClick={handleLogoClick}>
           <Avatar src={logo} sx={{ height: "80px", width: "80px" }} />
         </IconButton>
         <Typography variant="h4" fontSize="3.5rem">
