@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import logo from "../logo.png";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 function Copyright(props) {
   return (
@@ -33,13 +34,40 @@ function Copyright(props) {
 }
 
 export default function SignInSide({ showSignInSetter }) {
+  const auth = getAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const { email, password } = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        // user must be verified to log in
+        if (!user.emailVerified) {
+          signOut(auth)
+            .then(() => {
+              alert(
+                "Email is not verified!\nPlease check the email you used to register."
+              );
+            })
+            .catch((error) => {
+              // An error happened.
+              console.log(error);
+            });
+        } else {
+          // user is verified
+          // TODO: ADD NAVIGATION HERE
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
 
   return (
