@@ -14,6 +14,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import logo from "../logo.png";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -35,6 +36,7 @@ function Copyright(props) {
 
 export default function SignInSide({ showSignInSetter }) {
   const auth = getAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -51,7 +53,7 @@ export default function SignInSide({ showSignInSetter }) {
           signOut(auth)
             .then(() => {
               alert(
-                "Email is not verified!\nPlease check the email you used to register."
+                "Email is not verified!\nPlease check your inbox in the email you used to register."
               );
             })
             .catch((error) => {
@@ -60,7 +62,7 @@ export default function SignInSide({ showSignInSetter }) {
             });
         } else {
           // user is verified
-          // TODO: ADD NAVIGATION HERE
+          navigate("/");
         }
       })
       .catch((error) => {
