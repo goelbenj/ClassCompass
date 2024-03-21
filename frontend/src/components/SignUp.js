@@ -12,6 +12,13 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
 function Copyright(props) {
   return (
@@ -32,13 +39,40 @@ function Copyright(props) {
 }
 
 export default function SignUp({ showSignInSetter }) {
+  const auth = getAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const { email, firstName, lastName, password } = {
       email: data.get("email"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
       password: data.get("password"),
-    });
+    };
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        const displayName = firstName + " " + lastName;
+        updateProfile(user, { displayName: displayName });
+        // do not log in during account creation
+        signOut(auth).then(() => {
+          showSignInSetter(true);
+          sendEmailVerification(user).then(() => {
+            alert(
+              "A verification receipt has been sent to " +
+                "the email you used to register."
+            );
+          });
+        });
+        // API CALL WILL GO HERE TO CREATE USER PROFILE
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
 
   return (
