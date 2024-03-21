@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import SignInSide from "../components/SignInSide";
 import SignUp from "../components/SignUp";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ const Authentication = () => {
 
     return (
         // TODO: REPLACE WITH PROFILE PAGE SCREEN
-        auth.currentUser ? <Container>JOE MAMA</Container> : 
+        auth.currentUser ? <Box>JOE MAMA</Box> : 
         (showSignIn ? <SignInSide showSignInSetter={setShowSignIn} /> : <SignUp showSignInSetter={setShowSignIn}/>)
     )
 }

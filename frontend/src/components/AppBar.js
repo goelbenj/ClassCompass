@@ -40,11 +40,17 @@ const AppBarComponent = () => {
           Class Compass
         </Typography>
         <Box sx={{ flex: 1 }}></Box>
-        <Typography sx={{ pr: 5, fontWeight: 600 }}>Find Classes</Typography>
-        <Typography sx={{ pr: 5, fontWeight: 600 }}>Your Classes</Typography>
+        <Typography sx={{ pr: 5, fontWeight: 600, fontSize: "1.5rem" }}>
+          Find Classes
+        </Typography>
+        <Typography sx={{ pr: 5, fontWeight: 600, fontSize: "1.5rem" }}>
+          Your Classes
+        </Typography>
         <Link to={"/login"}>
-          <IconButton size="large">
-            <AccountCircleTwoToneIcon size="large" />
+          <IconButton>
+            <AccountCircleTwoToneIcon
+              sx={{ fontSize: "3rem", color: "secondary.main" }}
+            />
           </IconButton>
         </Link>
       </Toolbar>

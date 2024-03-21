@@ -9,6 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
+import { Box } from "@mui/material";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -32,7 +33,16 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    children: [{}],
+    children: [
+      {
+        path: "/",
+        element: <Box>JOE MAMA</Box>, // TODO: REPLACE WITH DEFAULT LANDING PAGE
+      },
+      {
+        path: "/your-classes",
+        element: <Box>YOUR CLASSES HERE</Box>, // TODO: REPLACE WITH YOUR CLASSES PAGE
+      },
+    ],
   },
   {
     path: "/login",
