@@ -36,7 +36,9 @@ const AppBarComponent = () => {
         <IconButton>
           <Avatar src={logo} sx={{ height: "80px", width: "80px" }} />
         </IconButton>
-        <Typography variant="h4">Class Compass</Typography>
+        <Typography variant="h4" fontSize="3.5rem">
+          Class Compass
+        </Typography>
         <Box sx={{ flex: 1 }}></Box>
         <Typography sx={{ pr: 5, fontWeight: 600 }}>Find Classes</Typography>
         <Typography sx={{ pr: 5, fontWeight: 600 }}>Your Classes</Typography>
