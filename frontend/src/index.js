@@ -19,6 +19,8 @@ import firebaseConfig from "./config";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+import FindClasses from "./components/FindClasses";
+import YourClasses from "./components/YourClasses";
 // import { getAnalytics } from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -36,11 +38,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Box>JOE MAMA</Box>, // TODO: REPLACE WITH DEFAULT LANDING PAGE
+        element: <FindClasses />,
       },
       {
         path: "/your-classes",
-        element: <Box>YOUR CLASSES HERE</Box>, // TODO: REPLACE WITH YOUR CLASSES PAGE
+        element: <YourClasses />,
       },
     ],
   },
