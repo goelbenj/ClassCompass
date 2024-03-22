@@ -4,6 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_server.utilities.json import CustomJSONProvider
 from flask_server.services.user_service import user_service
+from flask_server.services.course_card_service import course_card_service
 
 
 def create_app(test_config=None):
@@ -36,5 +37,6 @@ def create_app(test_config=None):
 
     # Register user service
     app.register_blueprint(user_service)
+    app.register_blueprint(course_card_service)
 
     return app
