@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 // import * as SecureStore from "expo-secure-store";
 
 export class Api {

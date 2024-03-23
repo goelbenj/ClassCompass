@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import SignInSide from "../components/SignInSide";
 import SignUp from "../components/SignUp";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getAuth } from "firebase/auth";
 
 const Authentication = () => {

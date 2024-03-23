@@ -10,7 +10,7 @@ const FindClasses = () => {
 
   useEffect(() => {
     api.getAllCourses().then((result) => {
-      if (result.result == "SUCCESSFUL") {
+      if (result.result === "SUCCESSFUL") {
         const courses = Object.values(result.data);
         setCourseCards(courses);
       } else {

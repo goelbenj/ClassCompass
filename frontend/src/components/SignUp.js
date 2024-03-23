@@ -69,8 +69,8 @@ export default function SignUp({ showSignInSetter }) {
         // API CALL WILL GO HERE TO CREATE USER PROFILE
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         // ..
       });
   };

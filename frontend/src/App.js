@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import AppBarComponent from "./components/AppBar";

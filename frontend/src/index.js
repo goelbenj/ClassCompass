@@ -9,7 +9,6 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
-import { Box } from "@mui/material";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -18,7 +17,7 @@ import firebaseConfig from "./config";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+// import { getStorage } from "firebase/storage";
 import FindClasses from "./components/FindClasses";
 import YourClasses from "./components/YourClasses";
 // import { getAnalytics } from "firebase/analytics";
@@ -28,7 +27,7 @@ import YourClasses from "./components/YourClasses";
 
 // Initialize firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+getAuth(app);
 
 const router = createBrowserRouter([
   {
