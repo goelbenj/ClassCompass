@@ -11,7 +11,10 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../helpers/API";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,11 +30,57 @@ const ExpandMore = styled((props) => {
 }));
 
 const CourseCard = ({ courseCard, index }) => {
+  const auth = getAuth();
+  const navigate = useNavigate();
+
+  const [buttonText, setButtonText] = useState("Add to Plan");
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const checkIfCourseInCourses = () => {
+    api.getUserProfile(auth.currentUser.uid).then((result) => {
+      const courses = result.data.courses;
+      if (courses.includes(courseCard.course_code)) {
+        setButtonText("Remove from Plan");
+      } else {
+        setButtonText("Add to Plan");
+      }
+    });
+  };
+
+  const handleAddToPlanClick = () => {
+    if (auth.currentUser === null) {
+      navigate("/login");
+      return;
+    }
+
+    api
+      .addCourseToProfile({
+        uid: auth.currentUser.uid,
+        course_code: courseCard.course_code,
+      })
+      .then((result) => {
+        if (result.result !== "SUCCESSFUL") {
+          alert("Something went wrong. Please try again.");
+        } else {
+          // Flip text if it was removed or added
+          checkIfCourseInCourses();
+        }
+      });
+  };
+
+  useEffect(() => {
+    const unregisterAuthObserver = auth.onAuthStateChanged((user) => {
+      if (auth.currentUser) {
+        // Flip text if it was removed or added
+        checkIfCourseInCourses();
+      }
+    });
+    return () => unregisterAuthObserver();
+  }, []);
 
   return (
     <Grid item xs={6} key={index}>
@@ -58,8 +107,13 @@ const CourseCard = ({ courseCard, index }) => {
           {/* <IconButton aria-label="add to your courses">
                   <FavoriteIcon />
                 </IconButton> */}
-          <Button size="small" variant="outlined" color="secondary">
-            Add to Plan
+          <Button
+            size="small"
+            variant="outlined"
+            color="secondary"
+            onClick={handleAddToPlanClick}
+          >
+            {buttonText}
           </Button>
           <ExpandMore
             expand={expanded}

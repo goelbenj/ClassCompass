@@ -53,6 +53,10 @@ export class Api {
   async editUserProfile(data) {
     return this.makeRequest(`user-service/edit-profile`, data, "PUT");
   }
+
+  async addCourseToProfile(data) {
+    return this.makeRequest(`user-service/add-course`, data, "PUT");
+  }
 }
 
 const api = new Api("apiKey");

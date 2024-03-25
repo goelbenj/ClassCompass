@@ -1,7 +1,10 @@
-from flask import Blueprint, abort, request
+from flask import Blueprint, abort, current_app, request
 from flask_server.classes.user_profile import UserProfile
 from flask_server.global_config import db_client
 from google.api_core.exceptions import NotFound as FirestoreNotFound
+from google.cloud import firestore
+import json
+import os
 from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 
 
@@ -84,3 +87,48 @@ def editUserProfile():
         abort(NotFound.code)
 
     return "", 204
+
+
+@user_service.route('/add-course', methods=['PUT'])
+def add_course():
+    '''
+    Adds a course by course code to the user profile's `courses` list pointed
+    to by the `uid`. If the course code already exists, the course is removed.
+    '''
+    data = request.json
+
+    # abort 400 if no uid is passed in body
+    if (uid := data.get('uid')) is None:
+        abort(BadRequest.code)
+
+    # abort 400 if no course code is passed in body
+    if (course_code := data.get('course_code')) is None:
+        abort(BadRequest.code)
+
+    # Perform class code check
+    base_dir = os.path.dirname(current_app.root_path)
+    file_path = os.path.join(base_dir, 'flask_server', 'clients', 'courses_static.json')
+    with open(file_path) as f:
+        all_courses = json.load(f)
+
+    if (all_courses.get(course_code)) == None:
+        abort(NotFound.code)
+
+    # get reference to user profiles collection
+    user_profiles_collection_ref = db_client.user_profiles_collection
+
+    # abort 404 if the announcement does not exist
+    try:
+        doc_ref = user_profiles_collection_ref.document(uid)
+        # update profile
+        profile_courses = doc_ref.get().to_dict().get('courses', [])
+        if (course_code in profile_courses):
+            # remove course
+            doc_ref.update({'courses': firestore.ArrayRemove([course_code])})
+        else:
+            # add course
+            doc_ref.update({'courses': firestore.ArrayUnion([course_code])})
+    except FirestoreNotFound:
+        abort(NotFound.code)
+
+    return [1,2,3], 204
