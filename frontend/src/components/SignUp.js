@@ -19,6 +19,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import api from "../helpers/API";
 
 function Copyright(props) {
   return (
@@ -66,7 +67,13 @@ export default function SignUp({ showSignInSetter }) {
             );
           });
         });
-        // API CALL WILL GO HERE TO CREATE USER PROFILE
+        api
+          .createUserProfile({
+            display_name: displayName,
+            email: user.email,
+            uid: user.uid,
+          })
+          .then((result) => {});
       })
       .catch((error) => {
         // const errorCode = error.code;
