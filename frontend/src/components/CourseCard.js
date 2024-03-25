@@ -34,21 +34,11 @@ const CourseCard = ({ courseCard, index }) => {
   const navigate = useNavigate();
 
   const [buttonText, setButtonText] = useState("Add to Plan");
+  const [buttonStyle, setButtonStyle] = useState("outlined");
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
-
-  const checkIfCourseInCourses = () => {
-    api.getUserProfile(auth.currentUser.uid).then((result) => {
-      const courses = result.data.courses;
-      if (courses.includes(courseCard.course_code)) {
-        setButtonText("Remove from Plan");
-      } else {
-        setButtonText("Add to Plan");
-      }
-    });
   };
 
   const handleAddToPlanClick = () => {
@@ -67,7 +57,13 @@ const CourseCard = ({ courseCard, index }) => {
           alert("Something went wrong. Please try again.");
         } else {
           // Flip text if it was removed or added
-          checkIfCourseInCourses();
+          if (buttonStyle === "outlined") {
+            setButtonText("Remove from Plan");
+            setButtonStyle("contained");
+          } else {
+            setButtonText("Add to Plan");
+            setButtonStyle("outlined");
+          }
         }
       });
   };
@@ -76,7 +72,16 @@ const CourseCard = ({ courseCard, index }) => {
     const unregisterAuthObserver = auth.onAuthStateChanged((user) => {
       if (auth.currentUser) {
         // Flip text if it was removed or added
-        checkIfCourseInCourses();
+        api.getUserProfile(auth.currentUser.uid).then((result) => {
+          const courses = result.data.courses;
+          if (courses.includes(courseCard.course_code)) {
+            setButtonText("Remove from Plan");
+            setButtonStyle("contained");
+          } else {
+            setButtonText("Add to Plan");
+            setButtonStyle("outlined");
+          }
+        });
       }
     });
     return () => unregisterAuthObserver();
@@ -109,7 +114,7 @@ const CourseCard = ({ courseCard, index }) => {
                 </IconButton> */}
           <Button
             size="small"
-            variant="outlined"
+            variant={buttonStyle}
             color="secondary"
             onClick={handleAddToPlanClick}
           >
