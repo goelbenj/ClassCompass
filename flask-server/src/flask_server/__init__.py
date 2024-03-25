@@ -37,7 +37,6 @@ def create_app(test_config=None):
 
     # Register user service
     app.register_blueprint(user_service)
-    app.register_blueprint(course_card_service)
 
     # Register course card service
     app.register_blueprint(course_card_service)
