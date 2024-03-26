@@ -31,7 +31,7 @@ const FindClasses = () => {
           <Box>JOE MAMA</Box>
         </Grid>
       </Grid>
-      <Grid container xs bgcolor="#a1b3c3" px={8} py={4} spacing={3}>
+      <Grid container xs bgcolor="#a1b3c3" px={8} py={4} spacing={0}>
         {courseCards.map((courseCard, index) => (
           <CourseCard courseCard={courseCard} index={index} />
         ))}

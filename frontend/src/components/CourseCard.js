@@ -89,53 +89,52 @@ const CourseCard = ({ courseCard, index }) => {
 
   return (
     <Grid item xs={6} key={index}>
-      <Card variant="outlined">
-        <CardContent
-          sx={{
-            height: "50px",
-            textAlign: "start",
-          }}
-        >
-          <Typography fontWeight="bold" fontSize="1.0rem">
-            {courseCard.course_code}: {courseCard.title}
-          </Typography>
-        </CardContent>
-        <CardActions
-          disableSpacing
-          sx={{
-            alignSelf: "stretch",
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
-          {/* <IconButton aria-label="add to your courses">
-                  <FavoriteIcon />
-                </IconButton> */}
-          <Button
-            size="small"
-            variant={buttonStyle}
-            color="secondary"
-            onClick={handleAddToPlanClick}
+      <Box display="flex" justifyContent="center">
+        <Card variant="outlined" sx={{ width: "90%" }}>
+          <CardContent
+            sx={{
+              height: "50px",
+              textAlign: "start",
+            }}
           >
-            {buttonText}
-          </Button>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon color="secondary" />
-          </ExpandMore>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent sx={{ textAlign: "start" }}>
-            <Box width="100%" height="1px" bgcolor="black" mb={2}></Box>
-            <Typography>{courseCard.description}</Typography>
+            <Typography fontWeight="bold" fontSize="1.0rem">
+              {courseCard.course_code}: {courseCard.title}
+            </Typography>
           </CardContent>
-        </Collapse>
-      </Card>
+          <CardActions
+            disableSpacing
+            sx={{
+              alignSelf: "stretch",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              size="small"
+              variant={buttonStyle}
+              color="secondary"
+              onClick={handleAddToPlanClick}
+            >
+              {buttonText}
+            </Button>
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon color="secondary" />
+            </ExpandMore>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent sx={{ textAlign: "start" }}>
+              <Box width="100%" height="1px" bgcolor="black" mb={2}></Box>
+              <Typography>{courseCard.description}</Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </Box>
     </Grid>
   );
 };

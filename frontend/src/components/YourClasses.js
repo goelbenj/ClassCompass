@@ -12,21 +12,15 @@ const YourClasses = () => {
     const unregisterAuthObserver = auth.onAuthStateChanged((user) => {
       if (auth.currentUser) {
         // Get user's courses
-        api.getUserProfile(auth.currentUser.uid).then((result) => {
+        api.getUserProfile(auth.currentUser.uid).then(async (result) => {
           // Build course list
           const courses = result.data.courses;
-          let courseList = [];
-          var promise = new Promise((resolve, reject) => {
-            courses.forEach((x, index, array) => {
-              api.getCourseCard(x).then((result) => {
-                courseList.push(result.data);
-                if (index === array.length - 1) resolve();
-              });
-            });
-          });
-          promise.then(() => {
-            setCourseCards(courseList);
-          });
+          let courseCardResults = [];
+          for (let course_code of courses) {
+            const result = await api.getCourseCard(course_code);
+            courseCardResults.push(result.data);
+          }
+          setCourseCards(courseCardResults);
         });
       }
     });
@@ -34,18 +28,8 @@ const YourClasses = () => {
   }, []);
 
   return (
-    <Grid container component="main" sx={{ height: "100vh", flexGrow: 1 }}>
-      <Grid container xs={4.5} sx={{ display: "inline" }}>
-        <Grid container item xs={12} justifyContent="start">
-          <Typography fontWeight="bold" fontSize="1.5rem">
-            Search Filters
-          </Typography>
-        </Grid>
-        <Grid item xs>
-          <Box>JOE MAMA</Box>
-        </Grid>
-      </Grid>
-      <Grid container xs bgcolor="#a1b3c3" px={8} py={4} spacing={3}>
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container xs bgcolor="#a1b3c3" px={8} py={4} spacing={0}>
         {courseCards.map((courseCard, index) => (
           <CourseCard courseCard={courseCard} index={index} />
         ))}
