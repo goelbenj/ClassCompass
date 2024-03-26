@@ -38,7 +38,7 @@ const CourseCard = ({ courseCard, index }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleCourseCardClick = () => {
-    console.log("CLICKED");
+    navigate(`/course/${courseCard.course_code}`, { state: courseCard });
   };
 
   const handleExpandClick = (event) => {

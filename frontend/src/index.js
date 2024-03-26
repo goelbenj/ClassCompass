@@ -20,6 +20,7 @@ import { getAuth } from "firebase/auth";
 // import { getStorage } from "firebase/storage";
 import FindClasses from "./components/FindClasses";
 import YourClasses from "./components/YourClasses";
+import CoursePage from "./components/CoursePage";
 // import { getAnalytics } from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/your-classes",
         element: <YourClasses />,
+      },
+      {
+        path: "/course/:course-code",
+        element: <CoursePage />,
       },
     ],
   },
