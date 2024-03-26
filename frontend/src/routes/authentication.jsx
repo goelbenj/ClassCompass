@@ -11,7 +11,7 @@ const Authentication = () => {
 
     return (
         // TODO: REPLACE WITH PROFILE PAGE SCREEN
-        auth.currentUser ? <Box>JOE MAMA</Box> : 
+        auth.currentUser ? <Box>{"<Profile Page Screen>"}</Box> : 
         (showSignIn ? <SignInSide showSignInSetter={setShowSignIn} /> : <SignUp showSignInSetter={setShowSignIn}/>)
     )
 }

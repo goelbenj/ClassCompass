@@ -28,7 +28,7 @@ const FindClasses = () => {
           </Typography>
         </Grid>
         <Grid item xs>
-          <Box>JOE MAMA</Box>
+          <Box>{"<Search Filters List>"}</Box>
         </Grid>
       </Grid>
       <Grid container xs bgcolor="#a1b3c3" px={8} py={4} spacing={0}>

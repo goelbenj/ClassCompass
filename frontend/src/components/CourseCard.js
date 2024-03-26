@@ -37,11 +37,16 @@ const CourseCard = ({ courseCard, index }) => {
   const [buttonStyle, setButtonStyle] = useState("outlined");
   const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleCourseCardClick = () => {
+    console.log("CLICKED");
   };
 
-  const handleAddToPlanClick = () => {
+  const handleExpandClick = (event) => {
+    setExpanded(!expanded);
+    event.stopPropagation();
+  };
+
+  const handleAddToPlanClick = (event) => {
     if (auth.currentUser === null) {
       navigate("/login");
       return;
@@ -66,6 +71,7 @@ const CourseCard = ({ courseCard, index }) => {
           }
         }
       });
+    event.stopPropagation();
   };
 
   useEffect(() => {
@@ -90,7 +96,16 @@ const CourseCard = ({ courseCard, index }) => {
   return (
     <Grid item xs={6} key={index}>
       <Box display="flex" justifyContent="center">
-        <Card variant="outlined" sx={{ width: "90%" }}>
+        <Card
+          variant="outlined"
+          sx={{
+            width: "90%",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
+          onClick={handleCourseCardClick}
+        >
           <CardContent
             sx={{
               height: "50px",
