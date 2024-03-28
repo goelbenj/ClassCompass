@@ -57,6 +57,10 @@ export class Api {
   async addCourseToProfile(data) {
     return this.makeRequest(`user-service/add-course`, data, "PUT");
   }
+
+  async filterCourses(data) {
+    return this.makeRequest(`course-card-service/filter`, data, "POST");
+  }
 }
 
 const api = new Api("apiKey");

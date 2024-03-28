@@ -51,10 +51,48 @@ def test_valid_get_course_card(test_client):
     golden_data = all_courses['ECE159']
     golden_data['course_code'] = 'ECE159'
 
-    # Check if the all of the fields in the JSON response match the expected values
+    # Check if all of the fields in the JSON response match the expected values
     assert data == golden_data
 
     # test for a course that does not exist
     response = test_client.get("/course-card-service/INVALID")
     
     assert response.status_code == 404
+
+def test_valid_filter_courses(test_client):
+    # Load golden data. Currently return data is the same as source data
+    file_path = os.path.join('src', 'flask_server', 'clients', 'courses_static.json')
+    with open(file_path) as f:
+        all_courses = json.load(f)
+    
+    # call /course-card-service/filter
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": "ECE"})
+    assert response.status_code == 200
+    data = json.loads(response.data)
+    # Check if all of the fields in the JSON response match the expected values
+    for key, value in data.items():
+        assert key in all_courses
+        all_courses[key]['course_code'] = key
+        assert value == all_courses[key]
+    
+    # test for a query with a string and a term
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": "Electric Circuits", "term": "Fall"})
+    assert response.status_code == 200
+    data = json.loads(response.data)
+    # Check if all of the fields in the JSON response match the expected values
+    for key, value in data.items():
+        assert key in all_courses
+        all_courses[key]['course_code'] = key
+        assert value == all_courses[key]
+        assert value['term'] == "Fall"
+
+    # test for a course that does not exist
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": "INVALID"})
+    
+    assert response.status_code == 200
+    assert response.data == b'{}'
+
+    # test for a course that does not exist
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": 123})
+    
+    assert response.status_code == 400
