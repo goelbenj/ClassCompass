@@ -66,7 +66,7 @@ def test_valid_filter_courses(test_client):
         all_courses = json.load(f)
     
     # call /course-card-service/filter
-    response = test_client.get("/course-card-service/filter", json={"stringQuery": "ECE"})
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": "ECE"})
     assert response.status_code == 200
     data = json.loads(response.data)
     # Check if all of the fields in the JSON response match the expected values
@@ -76,7 +76,7 @@ def test_valid_filter_courses(test_client):
         assert value == all_courses[key]
     
     # test for a query with a string and a term
-    response = test_client.get("/course-card-service/filter", json={"stringQuery": "Electric Circuits", "term": "Fall"})
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": "Electric Circuits", "term": "Fall"})
     assert response.status_code == 200
     data = json.loads(response.data)
     # Check if all of the fields in the JSON response match the expected values
@@ -87,12 +87,12 @@ def test_valid_filter_courses(test_client):
         assert value['term'] == "Fall"
 
     # test for a course that does not exist
-    response = test_client.get("/course-card-service/filter", json={"stringQuery": "INVALID"})
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": "INVALID"})
     
     assert response.status_code == 200
     assert response.data == b'{}'
 
     # test for a course that does not exist
-    response = test_client.get("/course-card-service/filter", json={"stringQuery": 123})
+    response = test_client.post("/course-card-service/filter", json={"stringQuery": 123})
     
     assert response.status_code == 400

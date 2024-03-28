@@ -51,7 +51,7 @@ def getCourseCard(course_code):
 
 # data should contain {stringQuery: str}
 #   optionally {term: str, class_time: str, rating: int, tags: List[str]}
-@course_card_service.route('/filter')
+@course_card_service.route('/filter', methods=['POST'])
 def filterCourses():
     '''Filter courses based on the given parameters'''
     data = request.json
