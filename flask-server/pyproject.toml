@@ -12,6 +12,7 @@ dependencies = [
     "flask-cors",
     "python-dateutil",
     "pytz",
+    "thefuzz",
 ]
 
 [project.optional-dependencies]
