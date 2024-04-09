@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { styled, alpha } from "@mui/material/styles";
+import { styled, alpha, useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import api from "../helpers/API";
+import { red } from "@mui/material/colors";
 import { CourseCardContext } from "../context/course-card-context";
+import { useLocation } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -51,7 +53,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchBarBox() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [disableSearch, setDisableSearch] = useState(false);
   const { updateState } = useContext(CourseCardContext);
+  const location = useLocation();
+  const theme = useTheme();
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -68,19 +73,48 @@ export default function SearchBarBox() {
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);
 
+  const containsSubstring = (str, substrings) => {
+    for (let substring of substrings) {
+      if (str.includes(substring)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    if (containsSubstring(location.pathname, ["/your-classes", "/course"])) {
+      setDisableSearch(true);
+    } else {
+      setDisableSearch(false);
+    }
+  }, [location]);
+
   return (
     <AppBar position="sticky" sx={{ top: "114px" }}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {/* Remove the MUI text */}
         </Typography>
-        <Search>
+        <Search
+          sx={{
+            backgroundColor: disableSearch
+              ? alpha(red.A400, 0.15)
+              : alpha(theme.palette.secondary.main, 0.15),
+            "&:hover": {
+              backgroundColor: disableSearch
+                ? alpha(red.A400, 0.15)
+                : alpha(theme.palette.secondary.main, 0.35),
+            },
+          }}
+        >
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search"
             inputProps={{ "aria-label": "search" }}
+            disabled={disableSearch}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </Search>
