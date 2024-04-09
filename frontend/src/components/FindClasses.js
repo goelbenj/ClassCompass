@@ -1,23 +1,10 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import api from "../helpers/API";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import CourseCard from "./CourseCard";
+import { CourseCardContext } from "../context/course-card-context";
 
 const FindClasses = () => {
-  const navigate = useNavigate();
-  const [courseCards, setCourseCards] = useState([]);
-
-  useEffect(() => {
-    api.getAllCourses().then((result) => {
-      if (result.result === "SUCCESSFUL") {
-        const courses = Object.values(result.data);
-        setCourseCards(courses);
-      } else {
-        alert("FAILED TO GET ALL COURSES");
-      }
-    });
-  }, [navigate]);
+  const { courseCardsTemp } = useContext(CourseCardContext);
 
   return (
     <Grid container component="main" sx={{ height: "100vh", flexGrow: 1 }}>
@@ -32,7 +19,7 @@ const FindClasses = () => {
         </Grid>
       </Grid>
       <Grid container xs bgcolor="#a1b3c3" px={8} py={4} spacing={0}>
-        {courseCards.map((courseCard, index) => (
+        {courseCardsTemp.map((courseCard, index) => (
           <CourseCard courseCard={courseCard} index={index} />
         ))}
       </Grid>
