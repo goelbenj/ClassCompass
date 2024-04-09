@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import api from "../helpers/API";
+import { CourseCardContext } from "../context/course-card-context";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,12 +51,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchBarBox() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { updateState } = useContext(CourseCardContext);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       api.filterCourses({ stringQuery: searchTerm }).then((result) => {
         if (result.result === "SUCCESSFUL") {
-          console.log(result.data);
+          const courses = Object.values(result.data);
+          updateState(courses);
         } else {
           alert("SEARCH FAILED FOR SOME REASON");
         }
