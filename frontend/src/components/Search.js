@@ -1,7 +1,6 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
@@ -9,10 +8,10 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  borderRadius: "30px",
+  backgroundColor: alpha(theme.palette.secondary.main, 0.15),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.secondary.main, 0.35),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -38,33 +37,45 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   width: "100%",
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingRight: theme.spacing(10),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
+    paddingLeft: "1em",
     transition: theme.transitions.create("width"),
     width: "100%",
   },
 }));
 
 export default function SearchBarBox() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      console.log(searchTerm);
+      // Send Axios request here
+    }, 800);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {/* Remove the MUI text */}
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar position="sticky" sx={{ top: "114px" }}>
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {/* Remove the MUI text */}
+        </Typography>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search"
+            inputProps={{ "aria-label": "search" }}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </Search>
+      </Toolbar>
+    </AppBar>
   );
 }
