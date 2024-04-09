@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import api from "../helpers/API";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -52,8 +53,13 @@ export default function SearchBarBox() {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      console.log(searchTerm);
-      // Send Axios request here
+      api.filterCourses({ stringQuery: searchTerm }).then((result) => {
+        if (result.result === "SUCCESSFUL") {
+          console.log(result.data);
+        } else {
+          alert("SEARCH FAILED FOR SOME REASON");
+        }
+      });
     }, 800);
 
     return () => clearTimeout(delayDebounceFn);
